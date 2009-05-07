@@ -307,34 +307,29 @@
 
     Ext.ux.FileUpload.superclass.constructor.call(this, this.form);
 
-    this.uploadButton.on('click', function(button) {
-      var buttonText = button.getText();
-      if (buttonText == 'Upload') {
-        var f = this.getForm();
-        if (f.isValid()) {
+    this.uploadButton.on('click', function(button) {      
+      var f = this.getForm();
+      if (f.isValid()) {
 
-          progressBar.updateProgress(0, ' ',false);
-          button.setText('Cancel');
-          this.startProgress();
+        progressBar.updateProgress(0, ' ',false);
+        button.disable();
+        this.startProgress();
 
-          f.submit({
-            url:      config.uploadTo,
-            success:  function(form, action) {
-              progressBar.updateProgress(1, '100% complete', true);
-              this.stopProgress();
-              button.setText('Upload');
-            },
-            failure: function(form, action) {
-              this.stopProgress();
-              button.setText('Upload');
-            },
-            scope: this
-          });
-        }
-      } else if (buttonText == 'Cancel') {
-        console.log('cancel pressed');
-        this.stopProgress();
+        f.submit({
+          url:      config.uploadTo,
+          success:  function(form, action) {
+            progressBar.updateProgress(1, '100% complete', true);
+            this.stopProgress();
+            button.enable();
+          },
+          failure: function(form, action) {
+            this.stopProgress();
+            button.enable();
+          },
+          scope: this
+        });
       }
+      
     }, this);
     
     this.resetButton.on('click', function() {
