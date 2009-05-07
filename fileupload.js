@@ -271,8 +271,8 @@
         value: uploadIdentifier
       },{
         xtype:      'fileuploadfield',
-        fieldLabel: 'Audio File',
-        name:       'audio-path',
+        fieldLabel: 'File',
+        name:       'path',
         buttonCfg:  {
           text:     '',
           iconCls:  'upload-icon'
