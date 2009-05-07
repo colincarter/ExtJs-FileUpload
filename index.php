@@ -1,13 +1,16 @@
 <html>
 <head>
   <title>ExtJS File Uploader</title>
-  <script src="ext-base.js" type="text/javascript"></script>
-  <script src="ext-all.js" type="text/javascript"></script>
+  <link rel="stylesheet" type="text/css" href="ext/resources/css/ext-all.css"/>
+  <link rel="stylesheet" type="text/css" href="file-upload.css" />
+  <script src="ext/adapter/ext/ext-base.js" type="text/javascript"></script>
+  <script src="ext/ext-all.js" type="text/javascript"></script>
+  <script src="ext/examples/form/FileUploadField.js"></script>
   <script src="fileupload.js" type="text/javascript"></script>
   <script type="text/javascript">
     Ext.onReady(function() {
       var fileUpload = new Ext.ux.FileUpload({
-        el:       'upload-div',
+        applyTo:  'upload-div',
         progress: 'progress.php',
         uploadTo: 'upload.php'
       });
@@ -15,6 +18,11 @@
   </script>
 </head>
 <body>
-  <div id="upload-div"><!--upload panel will go here --></div>
+
+  <span id="upload-div">
+    <span id="browse-button"></span>
+    <span id="upload-filename"></span>
+    <span id="upload-button"></span>
+  </span>
 </body>
 </html>
