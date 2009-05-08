@@ -242,45 +242,58 @@
     var uploadIdentifier= md5(new Date());
 
     this.uploadButton = new Ext.Button({
-      text: 'Upload'
+      text: 'Upload',
+      minWidth: 20
     });
 
-    this.resetButton = new Ext.Button({
-      text: 'Reset'
+    this.uploadButtonPanel = new Ext.Panel({
+      items: [this.uploadButton]
     });
 
     var progressBar = new Ext.ProgressBar({
       autoWidth: true
     });
 
-  
+    this.fileNameField = new Ext.form.TextField({
+      hideLabel: true,
+      name: 'path',
+
+    });
+
     this.browseButton = new Ext.form.FileUploadField({
       buttonOnly: true,
+      hideLabel: true,
       listeners: {
         'fileselected': function(fb, v) {
-          
+          this.fileNameField.setValue(v);
         },
         scope: this
       }
     });
 
-    this.fileMsg = Ext.createElement('div');
+    this.uploadIdentifierField = new Ext.form.Hidden({
+      name: 'UPLOAD_INDENTIFIER',
+      value: uploadIdentifier,
+      hidden: true,
+      hideLabel: true
+    });
 
     this.form = {
       renderTo:   'upload-div',
-      width: 500,
-      frame: true,
-      title: 'File Upload',
+      width:      400,
+      frame:      true,
+      title:      'File Upload',
       fileUpload: true,
       autoHeight: true,
+      bodyStyle: 'padding:5px 5px 0',
       items: [{
-        layout: 'column',
-        items: [{
-          xtype: 'hidden',
-          name: 'UPLOAD_IDENTIFIER',
-          value: uploadIdentifier
-        }, this.browseButton, this.uploadButton, progressBar]
-      }]
+        layout: 'form',
+        items:  [{
+          layout: 'column',
+          defaults: {columnWidth: .25},
+          items: [this.uploadIdentifierField, this.browseButton, this.fileNameField, this.uploadButtonPanel]
+        }]
+      }, progressBar]
     };
 
 /*
@@ -342,7 +355,7 @@
     this.uploadButton.on('click', function(button) {      
       var f = this.getForm();
       if (f.isValid()) {
-
+        console.log(f);
         progressBar.updateProgress(0, ' ',false);
         button.disable();
         this.startProgress();
@@ -362,13 +375,7 @@
         });
       }
       
-    }, this);
-    
-    this.resetButton.on('click', function() {
-      this.getForm().reset();
-      progressBar.updateProgress(0, ' ');
-    }, this);
-
+    }, this);    
   };
   
   Ext.extend(Ext.ux.FileUpload, Ext.form.FormPanel, {
