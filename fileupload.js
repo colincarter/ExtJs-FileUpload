@@ -256,8 +256,7 @@
 
     this.fileNameField = new Ext.form.TextField({
       hideLabel: true,
-      name: 'path',
-
+      name: 'path'
     });
 
     this.browseButton = new Ext.form.FileUploadField({
