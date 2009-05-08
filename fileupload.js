@@ -272,7 +272,7 @@
     });
 
     this.form = {
-      renderTo:   'upload-div',
+      renderTo:   config.applyTo,
       width:      400,
       frame:      true,
       fileUpload: true,
