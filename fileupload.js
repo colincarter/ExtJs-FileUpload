@@ -253,6 +253,37 @@
       autoWidth: true
     });
 
+  
+    this.browseButton = new Ext.form.FileUploadField({
+      buttonOnly: true,
+      listeners: {
+        'fileselected': function(fb, v) {
+          
+        },
+        scope: this
+      }
+    });
+
+    this.fileMsg = Ext.createElement('div');
+
+    this.form = {
+      renderTo:   'upload-div',
+      width: 500,
+      frame: true,
+      title: 'File Upload',
+      fileUpload: true,
+      autoHeight: true,
+      items: [{
+        layout: 'column',
+        items: [{
+          xtype: 'hidden',
+          name: 'UPLOAD_IDENTIFIER',
+          value: uploadIdentifier
+        }, this.browseButton, this.uploadButton, progressBar]
+      }]
+    };
+
+/*
     this.form = {
       renderTo:   'upload-div',
       fileUpload: true,
@@ -273,6 +304,7 @@
         xtype:      'fileuploadfield',
         fieldLabel: 'File',
         name:       'path',
+        buttonOnly: true,
         buttonCfg:  {
           text:     '',
           iconCls:  'upload-icon'
@@ -280,7 +312,7 @@
       }, progressBar],
       buttons: [this.uploadButton, this.resetButton]
     };
-
+*/
     this.progressTask = {
       run: function() {
         Ext.Ajax.request({

@@ -5,7 +5,7 @@
   <link rel="stylesheet" type="text/css" href="file-upload.css" />
   <script src="ext/adapter/ext/ext-base.js" type="text/javascript"></script>
   <script src="ext/ext-all.js" type="text/javascript"></script>
-  <script src="ext/examples/form/FileUploadField.js"></script>
+  <script src="FileUploadField.js"></script>
   <script src="fileupload.js" type="text/javascript"></script>
   <script type="text/javascript">
     Ext.onReady(function() {
