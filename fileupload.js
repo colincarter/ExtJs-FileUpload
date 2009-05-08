@@ -251,17 +251,18 @@
     });
 
     var progressBar = new Ext.ProgressBar({
-      autoWidth: true
+      width: 300
     });
 
     this.fileNameField = new Ext.form.TextField({
       hideLabel: true,
-      name: 'path'
+      name: 'display-path'
     });
 
     this.browseButton = new Ext.form.FileUploadField({
       buttonOnly: true,
       hideLabel: true,
+      name: 'path',
       listeners: {
         'fileselected': function(fb, v) {
           this.fileNameField.setValue(v);
@@ -270,18 +271,10 @@
       }
     });
 
-    this.uploadIdentifierField = new Ext.form.Hidden({
-      name: 'UPLOAD_INDENTIFIER',
-      value: uploadIdentifier,
-      hidden: true,
-      hideLabel: true
-    });
-
     this.form = {
       renderTo:   'upload-div',
       width:      400,
       frame:      true,
-      title:      'File Upload',
       fileUpload: true,
       autoHeight: true,
       bodyStyle: 'padding:5px 5px 0',
@@ -290,41 +283,15 @@
         items:  [{
           layout: 'column',
           defaults: {columnWidth: .25},
-          items: [this.uploadIdentifierField, this.browseButton, this.fileNameField, this.uploadButtonPanel]
+          items: [{
+            xtype: 'hidden',
+            name: 'UPLOAD_IDENTIFIER',
+            value: uploadIdentifier
+          }, this.browseButton, this.fileNameField, this.uploadButtonPanel]
         }]
       }, progressBar]
     };
 
-/*
-    this.form = {
-      renderTo:   'upload-div',
-      fileUpload: true,
-      width:      500,
-      frame:      true,
-      title:      'File Upload',
-      autoHeight: true,
-      defaults:   {
-        anchor:     '95%',
-        allowBlank: false,
-        msgTarget:  'side'
-      },
-      items: [{
-        xtype: 'hidden',
-        name: 'UPLOAD_IDENTIFIER',
-        value: uploadIdentifier
-      },{
-        xtype:      'fileuploadfield',
-        fieldLabel: 'File',
-        name:       'path',
-        buttonOnly: true,
-        buttonCfg:  {
-          text:     '',
-          iconCls:  'upload-icon'
-        }
-      }, progressBar],
-      buttons: [this.uploadButton, this.resetButton]
-    };
-*/
     this.progressTask = {
       run: function() {
         Ext.Ajax.request({
@@ -354,7 +321,6 @@
     this.uploadButton.on('click', function(button) {      
       var f = this.getForm();
       if (f.isValid()) {
-        console.log(f);
         progressBar.updateProgress(0, ' ',false);
         button.disable();
         this.startProgress();
